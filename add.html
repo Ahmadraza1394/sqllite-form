@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom font size for larger screens */
+      @media (min-width: 1024px) {
+        .custom-input {
+          font-size: 1.25rem; /* lg */
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full mx-4">
+      <h2 class="text-2xl font-bold text-center text-gray-700 mb-6">
+        Add User
+      </h2>
+
+      <form action="/adder">
+        <!-- First Name -->
+        <div class="mb-4">
+          <label for="first-name" class="block text-gray-700 font-semibold mb-2"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            class="custom-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+
+        <!-- Last Name -->
+        <div class="mb-4">
+          <label for="last-name" class="block text-gray-700 font-semibold mb-2"
+            >Last Name</label
+          >
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            class="custom-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <label for="email" class="block text-gray-700 font-semibold mb-2"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="custom-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="mb-6">
+          <label for="password" class="block text-gray-700 font-semibold mb-2"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="custom-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Add a new user
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const data = {
+          firstName: formData.get("first-name"),
+          lastName: formData.get("last-name"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+        };
+
+        const response = await fetch("/adder", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (body) {
+            console.log(body);
+          });
+      });
+    </script>
+  </body>
+</html>
